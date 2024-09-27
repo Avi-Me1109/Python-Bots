@@ -1,5 +1,6 @@
 import os
 from shutil import move
+import shutil
 
 files = []
 def find_files(directory):
@@ -11,7 +12,11 @@ def find_files(directory):
 def move_files(directory, extension):
     for file in files:
         if(file.endswith(extension)):
-            move(file, directory)
+            try:
+                move(file, directory)
+                return ""
+            except shutil.Error as e:
+                return os.path.basename(file)
 
 def delete_files(extension):
     for file in files:
